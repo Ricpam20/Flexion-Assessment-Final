@@ -37,10 +37,11 @@ deploy:
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_REGION
     - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_ID
-    - echo $FLEXION_SSH_KEY > key.pem
-    - cat key.pem
+    - echo $FLEXION_SSH_KEY > flexion-key-pair.pem
+    - cat flexion-key-pair.pem
     - ls
-    - scp -i key.pem Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
-    - scp -i key.pem Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
-    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
-    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
+    - chmod 400 flexion-key-pair.pem
+    - scp -i flexion-key-pair.pem Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
+    - scp -i flexion-key-pair.pem Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
+    - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
+    - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
