@@ -33,7 +33,6 @@ deploy:
   stage: deploy
   image: python:3 
   script:
-    - apt-get install -y python3-pip
     - pip3 install awscli
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
