@@ -5,9 +5,10 @@ stages:
 
 build_frontend:
   stage: build_frontend
-  image: node:18.9.0-alpine
+  image: node:18.9.0
   before_script:
-    - apt-get update && apt-get install -y npm
+    - apt-get update && apt-get install -y node:18.9.0
+    - apt-get install -y npm
    
   script:
     - pwd
