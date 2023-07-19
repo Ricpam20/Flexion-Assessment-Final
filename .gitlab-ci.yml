@@ -5,7 +5,7 @@ stages:
 
 build_frontend:
   stage: build_frontend
-  image: node:latest
+  image: npm:latest
   script:
     - cd Flexion-frontend/ 
     - npm install
