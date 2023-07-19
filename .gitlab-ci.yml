@@ -12,7 +12,7 @@ build_frontend:
     - npm run build 
   artifacts:
     paths:
-      - ./Flexion-frontend/build
+      - Flexion-frontend/build
 
 build_backend:
   stage: build_backend
@@ -23,7 +23,7 @@ build_backend:
     - mvn clean package 
   artifacts:
     paths:
-      - Flexion-backend/target/
+      - Flexion-backend/target
 
 deploy:
   stage: deploy
@@ -35,7 +35,6 @@ deploy:
     - cat flexion-key-pair.pem
     - ls
     - chmod 400 flexion-key-pair.pem
-    # - mkdir
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-frontend ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
     - ssh -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem "cd ~ && chmod +x deploy.sh && ./deploy.sh"
