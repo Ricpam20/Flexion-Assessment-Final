@@ -7,11 +7,13 @@ build_frontend:
   stage: build_frontend
   image: node:14 
   before_script:
-    - apt-get update && apt-get install -y npm:latest
+    - apt-get update && apt-get install -y npm
   script:
     - pwd
     - cd Flexion-frontend/ 
-    - npm i --lockfile-version 3
+    - pwd
+    - npm -v
+    - npm install
     - npm run build 
   artifacts:
     paths:
