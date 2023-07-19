@@ -3,42 +3,43 @@ stages:
   - build_backend
   - deploy
 
-build_frontend:
-  stage: build_frontend
-  image: node:18
-  # before_script:
-  #   - apt-get update && apt-get install -y nodejs   
-  script:
-    - cd Flexion-frontend/ 
-    - npm -v
-    - npm install
-    - npm run build 
-  artifacts:
-    paths:
-      - $FRONTEND_BUILD_DIR
+# build_frontend:
+#   stage: build_frontend
+#   image: node:18
+#   # before_script:
+#   #   - apt-get update && apt-get install -y nodejs   
+#   script:
+#     - cd Flexion-frontend/ 
+#     - npm -v
+#     - npm install
+#     - npm run build 
+#   artifacts:
+#     paths:
+#       - $FRONTEND_BUILD_DIR
 
-build_backend:
-  stage: build_backend
-  image: maven:3-jdk-11
-  script:
-    - cd Flexion-backend/ 
-    - mvn -v
-    - mvn clean package 
-  artifacts:
-    paths:
-      - Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar
+# build_backend:
+#   stage: build_backend
+#   image: maven:3-jdk-11
+#   script:
+#     - cd Flexion-backend/ 
+#     - mvn -v
+#     - mvn clean package 
+#   artifacts:
+#     paths:
+#       - Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar
 
 deploy:
   stage: deploy
   image: ubuntu:20.04
   before_script:
-    - apt-get update && apt-get install openssh-client 
+    - apt-get update && apt-get install openssh-client -y
   script:
     - cat $FLEXION_SSH_KEY > flexion-key-pair.pem
     - cat flexion-key-pair.pem
     - ls
     - chmod 400 flexion-key-pair.pem
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
-    - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
-    - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
+    # - mkdir
+    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-frontend/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
+    # - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
+    # - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
+    # - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
