@@ -7,7 +7,7 @@ build_frontend:
   stage: build_frontend
   image: node:14 
   script:
-    - cd frontend 
+    - cd Flexion-frontend/ 
     - npm install
     - npm run build 
   artifacts:
@@ -18,11 +18,11 @@ build_backend:
   stage: build_backend
   image: maven:3-jdk-11
   script:
-    - cd backend 
+    - cd Flexion-backend/ 
     - mvn clean package 
   artifacts:
     paths:
-      - backend/target/*.jar
+      - Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar
 
 deploy:
   stage: deploy
@@ -36,6 +36,6 @@ deploy:
     - aws configure set default.region $AWS_REGION
     - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_IP
     - scp -i $FLEXION_SSH_KEY $FRONTEND_BUILD_DIR/* ec2-user@$AWS_INSTANCE_IP:/var/www/html 
-    - scp -i $FLEXION_SSH_KEY backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user 
+    - scp -i $FLEXION_SSH_KEY Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user 
     - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "sudo systemctl stop your-backend-service" 
-    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/your-backend-app.jar > /dev/null 2>&1 &" 
+    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &" 
