@@ -7,7 +7,7 @@ build_frontend:
   stage: build_frontend
   image: node:18
   before_script:
-    - apt-get update && apt-get install -y npm@8.19.1
+    - apt-get update && apt-get install -y nodejs
     # - npm i npm@8.19.2
    
   script:
