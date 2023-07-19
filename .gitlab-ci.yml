@@ -5,14 +5,15 @@ stages:
 
 build_frontend:
   stage: build_frontend
-  image: node:latest
+  image: node:18.9.0-alpine
   before_script:
     - apt-get update && apt-get install -y npm
-    - npm i npm@8.19.2
+   
   script:
     - pwd
     - cd Flexion-frontend/ 
     - pwd
+    - npm i npm@8.19.2
     - npm -v
     - npm install
     - npm run build 
