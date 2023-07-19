@@ -31,6 +31,8 @@ build_backend:
 deploy:
   stage: deploy
   image: ubuntu:20.04
+  before_script:
+    - apt-get update && apt-get install openssh-client 
   script:
     - cat $FLEXION_SSH_KEY > flexion-key-pair.pem
     - cat flexion-key-pair.pem
