@@ -1,0 +1,41 @@
+stages:
+  - build_frontend
+  - build_backend
+  - deploy
+
+build_frontend:
+  stage: build_frontend
+  image: node:14 
+  script:
+    - cd frontend 
+    - npm install
+    - npm run build 
+  artifacts:
+    paths:
+      - $FRONTEND_BUILD_DIR
+
+build_backend:
+  stage: build_backend
+  image: maven:3-jdk-11 # Choose a Maven and Java version appropriate for your Spring Boot app
+  script:
+    - cd backend # Change directory to your Spring Boot backend
+    - mvn clean package # Build your Spring Boot backend
+  artifacts:
+    paths:
+      - backend/target/*.jar
+
+deploy:
+  stage: deploy
+  image: python:3 # We'll use Python to deploy to EC2, you can choose a different image if needed
+  script:
+    - apt-get update -y
+    - apt-get install -y python3-pip
+    - pip3 install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_REGION
+    - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_IP
+    - scp -i $FLEXION_SSH_KEY $FRONTEND_BUILD_DIR/* ec2-user@$AWS_INSTANCE_IP:/var/www/html # Copy frontend build files to EC2
+    - scp -i $FLEXION_SSH_KEY backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user # Copy backend JAR file to EC2
+    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "sudo systemctl stop your-backend-service" # Stop your backend service
+    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/your-backend-app.jar > /dev/null 2>&1 &" # Start your backend service
