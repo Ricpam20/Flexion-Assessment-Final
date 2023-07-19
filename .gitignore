@@ -1,5 +1,8 @@
 /Flexion-backend/.idea
 /Flexion-backend/.mvn
+/Flexion-backend/target/
+/Flexion-frontend/node_modules/
+/Flexion-frontend/.codesandbox
 
 .DS_Store
 
