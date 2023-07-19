@@ -38,7 +38,8 @@ deploy:
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_REGION
     - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_ID
-    - scp -i $FLEXION_SSH_KEY $FRONTEND_BUILD_DIR/* ec2-user@$AWS_INSTANCE_IP:/var/www/html 
-    - scp -i $FLEXION_SSH_KEY Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user 
-    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "sudo systemctl stop your-backend-service" 
-    - ssh -i $FLEXION_SSH_KEY ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &" 
+    - echo $FLEXION_SSH_KEY > key.pem
+    - scp -i key.pem $FRONTEND_BUILD_DIR/* ec2-user@$AWS_INSTANCE_IP:/var/www/html 
+    - scp -i key.pem Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user 
+    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "sudo systemctl stop your-backend-service" 
+    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &" 
