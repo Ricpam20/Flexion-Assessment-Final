@@ -1,21 +1,21 @@
 stages:
-  # - build_frontend
+  - build_frontend
   - build_backend
   - deploy
 
-# build_frontend:
-#   stage: build_frontend
-#   image: node:18
-#   before_script:
-#     - apt-get update && apt-get install -y nodejs   
-#   script:
-#     - cd Flexion-frontend/ 
-#     - npm -v
-#     - npm install
-#     - npm run build 
-#   artifacts:
-#     paths:
-#       - $FRONTEND_BUILD_DIR
+build_frontend:
+  stage: build_frontend
+  image: node:18
+  before_script:
+    - apt-get update && apt-get install -y nodejs   
+  script:
+    - cd Flexion-frontend/ 
+    - npm -v
+    - npm install
+    - npm run build 
+  artifacts:
+    paths:
+      - $FRONTEND_BUILD_DIR
 
 build_backend:
   stage: build_backend
