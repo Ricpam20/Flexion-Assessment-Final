@@ -30,18 +30,13 @@ build_backend:
 
 deploy:
   stage: deploy
-  image: python:3
+  image: ubuntu:20.04
   script:
-    - pip3 install awscli
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - aws configure set default.region $AWS_REGION
-    - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_ID
     - cat $FLEXION_SSH_KEY > flexion-key-pair.pem
     - cat flexion-key-pair.pem
     - ls
     - chmod 400 flexion-key-pair.pem
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem /Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem /Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
+    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
+    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
     - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
     - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
