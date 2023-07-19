@@ -9,6 +9,7 @@ build_frontend:
   before_script:
     - apt-get update && apt-get install -y npm
   script:
+    - pwd
     - cd Flexion-frontend/ 
     - npm install
     - npm run build 
