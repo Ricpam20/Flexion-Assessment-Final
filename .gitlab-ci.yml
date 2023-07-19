@@ -30,7 +30,7 @@ build_backend:
 
 deploy:
   stage: deploy
-  image: python:3 
+  image: python:3
   script:
     - pip3 install awscli
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
@@ -40,7 +40,7 @@ deploy:
     - echo $FLEXION_SSH_KEY > key.pem
     - cat key.pem
     - ls
-    - scp -i key.pem $FRONTEND_BUILD_DIR/* ec2-user@$AWS_INSTANCE_IP:/var/www/html 
-    - scp -i key.pem Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user 
-    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "sudo systemctl stop your-backend-service" 
-    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &" 
+    - scp -i key.pem Flexion-frontend/build/* ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
+    - scp -i key.pem Flexion-backend/target/*.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
+    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
+    - ssh -i key.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
