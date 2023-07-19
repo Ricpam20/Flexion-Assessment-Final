@@ -37,7 +37,7 @@ deploy:
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_REGION
     - aws ec2 wait instance-status-ok --instance-ids $AWS_INSTANCE_ID
-    - echo $FLEXION_SSH_KEY > flexion-key-pair.pem
+    - cat $FLEXION_SSH_KEY > flexion-key-pair.pem
     - cat flexion-key-pair.pem
     - ls
     - chmod 400 flexion-key-pair.pem
