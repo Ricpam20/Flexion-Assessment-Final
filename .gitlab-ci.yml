@@ -7,8 +7,7 @@ build_frontend:
   stage: build_frontend
   image: node:14 
   before_script:
-    - sudo apt-get update -y
-    - sudo apt-get install -y nodejs
+    - apt-get update && apt-get install -y nodejs
   script:
     - cd Flexion-frontend/ 
     - npm install
@@ -20,6 +19,8 @@ build_frontend:
 build_backend:
   stage: build_backend
   image: maven:3-jdk-11
+  before_script:
+    - apt-get update && apt-get install -y maven
   script:
     - cd Flexion-backend/ 
     - mvn clean package 
