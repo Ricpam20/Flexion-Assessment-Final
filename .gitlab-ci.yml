@@ -24,6 +24,7 @@ build_backend:
     - apt-get update && apt-get install -y maven
   script:
     - cd Flexion-backend/ 
+    - mvn -v
     - mvn clean package 
   artifacts:
     paths:
