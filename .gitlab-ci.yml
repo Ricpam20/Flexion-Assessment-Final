@@ -11,7 +11,7 @@ build_frontend:
   script:
     - pwd
     - cd Flexion-frontend/ 
-    - npm install
+    - npm i --lockfile-version 3
     - npm run build 
   artifacts:
     paths:
