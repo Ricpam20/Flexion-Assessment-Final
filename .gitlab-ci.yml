@@ -6,6 +6,8 @@ stages:
 build_frontend:
   stage: build_frontend
   image: node:14 
+  before_script:
+    - apt install nodejs
   script:
     - cd Flexion-frontend/ 
     - which npm
