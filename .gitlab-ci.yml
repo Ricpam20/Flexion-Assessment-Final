@@ -7,8 +7,8 @@ build_frontend:
   stage: build_frontend
   image: node:14 
   before_script:
-    - apt-get update -y
-    - apt-get install -y nodejs
+    - sudo apt-get update -y
+    - sudo apt-get install -y nodejs
   script:
     - cd Flexion-frontend/ 
     - npm install
