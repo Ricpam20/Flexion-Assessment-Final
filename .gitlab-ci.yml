@@ -3,16 +3,16 @@ stages:
   - build_backend
   - deploy
 
-build_frontend:
-  stage: build_frontend
-  image: npm:latest
-  script:
-    - cd Flexion-frontend/ 
-    - npm install
-    - npm run build 
-  artifacts:
-    paths:
-      - $FRONTEND_BUILD_DIR
+# build_frontend:
+#   stage: build_frontend
+#   image: npm:latest
+#   script:
+#     - cd Flexion-frontend/ 
+#     - npm install
+#     - npm run build 
+#   artifacts:
+#     paths:
+#       - $FRONTEND_BUILD_DIR
 
 build_backend:
   stage: build_backend
