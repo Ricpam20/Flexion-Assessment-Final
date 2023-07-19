@@ -1,32 +1,32 @@
 stages:
-  # - build_frontend
-  # - build_backend
+  - build_frontend
+  - build_backend
   - deploy
 
-build_frontend:
-  stage: build_frontend
-  image: node:18
-  # before_script:
-  #   - apt-get update && apt-get install -y nodejs   
-  script:
-    - cd Flexion-frontend/ 
-    - npm -v
-    - npm install
-    - npm run build 
-  artifacts:
-    paths:
-      - $FRONTEND_BUILD_DIR
+# build_frontend:
+#   stage: build_frontend
+#   image: node:18
+#   # before_script:
+#   #   - apt-get update && apt-get install -y nodejs   
+#   script:
+#     - cd Flexion-frontend/ 
+#     - npm -v
+#     - npm install
+#     - npm run build 
+#   artifacts:
+#     paths:
+#       - $FRONTEND_BUILD_DIR
 
-build_backend:
-  stage: build_backend
-  image: maven:3-jdk-11
-  script:
-    - cd Flexion-backend/ 
-    - mvn -v
-    - mvn clean package 
-  artifacts:
-    paths:
-      - Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar
+# build_backend:
+#   stage: build_backend
+#   image: maven:3-jdk-11
+#   script:
+#     - cd Flexion-backend/ 
+#     - mvn -v
+#     - mvn clean package 
+#   artifacts:
+#     paths:
+#       - Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar
 
 deploy:
   stage: deploy
