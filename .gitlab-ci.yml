@@ -11,7 +11,6 @@ build_frontend:
     - apt-get install -y nodejs
   script:
     - cd Flexion-frontend/ 
-    - which npm
     - npm install
     - npm run build 
   artifacts:
