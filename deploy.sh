@@ -18,8 +18,7 @@ fi
 echo "Installed Versions:"
 mvn -version
 java -version
-node -v
-npm -v
+
 
 #kill running processes
 sudo fuser -k 3000/tcp
@@ -28,3 +27,5 @@ sudo fuser -k 8080/tcp
 #boot applications
 cd ~/backend/
 nohup java -jar assessment 0.0.1-SNAPSHOT.jar 
+
+cp ~/frontend/build/* /var/www/html
