@@ -52,6 +52,6 @@ sudo fuser -k 8080/tcp
 cd ~/backend/
 nohup java -jar assessment 0.0.1-SNAPSHOT.jar 
 
-cd ../frontend/
-ls
+cd ~/frontend/
+npm install
 npm start
