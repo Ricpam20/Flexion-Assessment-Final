@@ -8,8 +8,8 @@ command_exists() {
 # Check and install Maven 3
 if ! command_exists mvn; then
   echo "Maven not found. Installing Maven 3..."
-  sudo apt update
-  sudo apt install -y maven
+  sudo yum update
+  sudo yum install -y maven
 else
   echo "Maven is already installed."
 fi
@@ -17,8 +17,8 @@ fi
 # Check and install Java 11
 if ! command_exists java; then
   echo "Java 11 not found. Installing OpenJDK 11..."
-  sudo apt update
-  sudo apt install -y openjdk-11-jdk
+  sudo yum update
+  sudo yum install -y openjdk-11-jdk
 else
   echo "Java 11 is already installed."
 fi
@@ -31,7 +31,7 @@ if ! command_exists node; then
   curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 
   # Install Node.js
-  sudo apt-get install -y nodejs
+  sudo yum install -y nodejs
 else
   echo "Node.js is already installed."
 fi
@@ -44,9 +44,13 @@ node -v
 npm -v
 ls
 pwd
+
+sudo fuser -k 3000/tcp
+sudo fuser -k 8080/tcp
+
 #boot applications
 cd ~/backend/
-nohup java -jar assessment 0.0.1-SNAPSHOT.jar
+nohup java -jar assessment 0.0.1-SNAPSHOT.jar 
 
 cd ../frontend/
 ls
