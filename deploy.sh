@@ -22,16 +22,15 @@ sudo yum install -y httpd
 
 # Show installed versions
 echo "Installed Versions:"
-java --version
+sudo java --version
 
-
-#kill running processes
-sudo fuser -k 3000/tcp
-sudo fuser -k 8080/tcp
+sudo systemctl stop httpd
 
 #boot applications
 sudo cp -r frontend/* /var/www/html/
+sudo systemctl start httpd
+
 cd ~/backend/
-sudo nohup java -jar assessment 0.0.1-SNAPSHOT.jar 
+sudo java -jar assessment 0.0.1-SNAPSHOT.jar >> logs.log
 
 
