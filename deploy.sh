@@ -31,6 +31,6 @@ sudo cp -r frontend/* /var/www/html/
 sudo systemctl start httpd
 
 cd ~/backend/
-java -jar assessment 0.0.1-SNAPSHOT.jar >> logs.log
+sudo java -jar assessment-0.0.1-SNAPSHOT.jar >> logs.log
 
 
