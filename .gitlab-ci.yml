@@ -36,8 +36,6 @@ deploy:
     - ls
     - chmod 400 flexion-key-pair.pem
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-frontend ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ./Flexion-backend/target/assessment-0.0.1-SNAPSHOT.jar ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
+    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-backend/target ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem deploy.sh ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/
     - ssh -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd ~ && chmod +x deploy.sh && ./deploy.sh"
-    # - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "nohup java -jar /home/ec2-user/Flexion-backend/assessment-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &"
-    # - ssh -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd Flexion-frontend && npm install -g serve && serve -s build"
