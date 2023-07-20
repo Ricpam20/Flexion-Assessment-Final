@@ -9,12 +9,12 @@ command_exists() {
 if ! command_exists java; then
   echo "Java 11 not found. Installing OpenJDK 11..."
   sudo yum update
-  sudo yum install openjdk-11-jdk -y
+  sudo yum install -y java-11-openjdk
 else
   echo "Java 11 is already installed."
 fi
 
-sudo yum install httpd -y
+sudo yum install -y httpd 
 
 # Show installed versions
 echo "Installed Versions:"
