@@ -11,12 +11,12 @@ if ! command_exists java; then
   sudo curl -O https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz
   sudo tar zxvf openjdk-11.0.1_linux-x64_bin.tar.gz
   sudo mv jdk-11.0.1 /usr/local/
-
-  sudo echo "export JAVA_HOME=/usr/local/jdk-11.0.1\n export PATH=$PATH:$JAVA_HOME/bin" >> /etc/profile.d/jdk11.sh
-  sudo source /etc/profile.d/jdk11.sh
 else
   echo "Java 11 is already installed."
 fi
+
+sudo echo "export JAVA_HOME=/usr/local/jdk-11.0.1\n export PATH=$PATH:$JAVA_HOME/bin" > /etc/profile.d/jdk11.sh
+sudo source /etc/profile.d/jdk11.sh
 
 sudo yum install -y httpd 
 
