@@ -26,6 +26,7 @@ sudo fuser -k 8080/tcp
 
 #boot applications
 cd ~/backend/
+cp ~/frontend/* /var/www/html
 nohup java -jar assessment 0.0.1-SNAPSHOT.jar 
 
-cp ~/frontend/build/* /var/www/html
+
