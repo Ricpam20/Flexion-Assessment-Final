@@ -35,7 +35,7 @@ deploy:
     - cat flexion-key-pair.pem
     - ls
     - chmod 400 flexion-key-pair.pem
-    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-frontend ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/frontend
+    - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-frontend/build ec2-user@$AWS_INSTANCE_IP:/var/www/html
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem -pr ./Flexion-backend/target ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/backend 
     - scp -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem deploy.sh ec2-user@$AWS_INSTANCE_IP:/home/ec2-user/
     - ssh -o 'StrictHostKeyChecking no' -i flexion-key-pair.pem ec2-user@$AWS_INSTANCE_IP "cd ~ && chmod +x deploy.sh && ./deploy.sh"
