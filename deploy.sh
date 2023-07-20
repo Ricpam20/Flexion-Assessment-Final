@@ -14,6 +14,8 @@ else
   echo "Java 11 is already installed."
 fi
 
+sudo yum install httpd
+
 # Show installed versions
 echo "Installed Versions:"
 mvn -version
