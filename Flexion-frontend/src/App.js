@@ -15,7 +15,7 @@ export default function App() {
     console.log(formData);
 
     axios
-      .post("http://localhost:8080/evaluate", formData)
+      .post("http://172.31.41.203:8080/evaluate", formData)
       .then((response) => {
         document.getElementById('output').innerHTML = '<h2>'+ response.data +'</h2>'
         console.log("Form submitted successfully!", response);
