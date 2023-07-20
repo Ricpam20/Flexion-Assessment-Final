@@ -22,7 +22,7 @@ sudo yum install -y httpd
 
 # Show installed versions
 echo "Installed Versions:"
-sudo java --version
+java --version
 
 sudo systemctl stop httpd
 
